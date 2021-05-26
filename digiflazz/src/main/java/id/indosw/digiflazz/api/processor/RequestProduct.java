@@ -5,10 +5,8 @@ import android.app.Activity;
 import id.indosw.digiflazz.api.controller.ProductRequestController;
 import id.indosw.digiflazz.api.sign.SignMaker;
 
-import static id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_BALANCE_CHECK;
 import static id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_PRICELIST_PASCA;
 import static id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_PRICELIST_PRA;
-import static id.indosw.digiflazz.api.commandvalue.CommandValue.SIGN_BALANCE_CHECK;
 import static id.indosw.digiflazz.api.commandvalue.CommandValue.SIGN_PRICELIST;
 
 public class RequestProduct {
