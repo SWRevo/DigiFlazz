@@ -1,17 +1,17 @@
 package id.indosw.digiflazz.api.processor
 
 import android.app.Activity
-import id.indosw.digiflazz.api.controller.TopUpRequestController
+import id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_BILLING_CHECK
+import id.indosw.digiflazz.api.controller.CheckBillRequestController
 import id.indosw.digiflazz.api.sign.SignMaker.getSign
 
-class RequestTopUp(val activity: Activity) {
+class RequestCheckBills(val activity: Activity) {
     private var username: String? = null
     private var backendUrl: String? = null
     private var key: String? = null
     private var refId: String? = null
     private var sku: String? = null
     private var custNumber: String? = null
-    private var msg: String? = null
     fun setBackendUrl(backendUrl: String?) {
         this.backendUrl = backendUrl
     }
@@ -36,13 +36,9 @@ class RequestTopUp(val activity: Activity) {
         this.custNumber = custNumber
     }
 
-    fun setMessage(msg: String?) {
-        this.msg = msg
-    }
-
-    fun startRequestTopUp(requestListener: RequestListener?) {
+    fun startRequestCheckBill(requestListener: RequestListener?) {
         val signature = getSign(username!!, key!!, refId!!)
-        TopUpRequestController.instance!!.execute(this, backendUrl, username, key, sku, custNumber, refId, msg, signature, requestListener!!)
+        CheckBillRequestController.instance!!.execute(this, backendUrl, username, key, CMD_BILLING_CHECK, sku, custNumber, refId, signature, requestListener!!)
     }
 
     interface RequestListener {

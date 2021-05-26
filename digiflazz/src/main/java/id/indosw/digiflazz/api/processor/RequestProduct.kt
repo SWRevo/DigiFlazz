@@ -1,56 +1,46 @@
-package id.indosw.digiflazz.api.processor;
+package id.indosw.digiflazz.api.processor
 
-import android.app.Activity;
+import android.app.Activity
+import id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_PRICELIST_PASCA
+import id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_PRICELIST_PRA
+import id.indosw.digiflazz.api.commandvalue.CommandValue.SIGN_PRICELIST
+import id.indosw.digiflazz.api.controller.ProductRequestController
+import id.indosw.digiflazz.api.sign.SignMaker.getSign
 
-import id.indosw.digiflazz.api.controller.ProductRequestController;
-import id.indosw.digiflazz.api.sign.SignMaker;
-
-import static id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_PRICELIST_PASCA;
-import static id.indosw.digiflazz.api.commandvalue.CommandValue.CMD_PRICELIST_PRA;
-import static id.indosw.digiflazz.api.commandvalue.CommandValue.SIGN_PRICELIST;
-
-public class RequestProduct {
-    private final Activity activity;
-    private String username;
-    private String backendUrl;
-    private String key;
-    private String sku;
-
-    public RequestProduct(Activity activity){
-        this.activity = activity;
+class RequestProduct(val activity: Activity) {
+    private var username: String? = null
+    private var backendUrl: String? = null
+    private var key: String? = null
+    private var sku: String? = null
+    fun setBackendUrl(backendUrl: String?) {
+        this.backendUrl = backendUrl
     }
 
-    public void setBackendUrl(String backendUrl){
-        this.backendUrl = backendUrl;
+    fun setUserName(username: String?) {
+        this.username = username
     }
 
-    public void setUserName(String username){
-        this.username = username;
+    fun setKey(key: String?) {
+        this.key = key
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    fun setSKU(sku: String?) {
+        this.sku = sku
     }
 
-    public void setSKU(String sku) {
-        this.sku = sku;
+    fun startRequestProduct(requestListener: RequestListener?, prabayar: Boolean) {
+        val signature = getSign(username!!, key!!, SIGN_PRICELIST)
+        val cmdSet: String
+        if (prabayar) {
+            cmdSet = CMD_PRICELIST_PRA
+        } else {
+            cmdSet = CMD_PRICELIST_PASCA
+        }
+        ProductRequestController.instance!!.execute(this, backendUrl, username, key, cmdSet, sku, signature, requestListener!!)
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
-    public void startRequestProduct(RequestProduct.RequestListener requestListener, boolean prabayar){
-        String signature = SignMaker.getSign(username, key, SIGN_PRICELIST);
-        String cmdSet;
-        if(prabayar){ cmdSet = CMD_PRICELIST_PRA;}
-        else {cmdSet = CMD_PRICELIST_PASCA;}
-        ProductRequestController.getInstance().execute(this, backendUrl, username, key, cmdSet, sku, signature, requestListener);
-    }
-
-    public interface RequestListener {
-        void onResponse(String response);
-        void onErrorResponse(String message);
-    }
-
-    public Activity getActivity() {
-        return activity;
+    interface RequestListener {
+        fun onResponse(response: String?)
+        fun onErrorResponse(message: String?)
     }
 }

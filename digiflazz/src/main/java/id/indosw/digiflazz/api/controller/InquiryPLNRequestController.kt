@@ -1,22 +1,24 @@
 package id.indosw.digiflazz.api.controller
 
-import id.indosw.digiflazz.api.commandstring.PriceList
+import id.indosw.digiflazz.api.commandstring.InquiryPLN
 import id.indosw.digiflazz.api.endpoint.EndPointDigiflazz
-import id.indosw.digiflazz.api.processor.RequestProduct
+import id.indosw.digiflazz.api.processor.RequestInquiryPLN
 import okhttp3.*
 import java.io.IOException
 import java.util.*
 
-class ProductRequestController {
-    fun execute(requestProduct: RequestProduct, backendUrl: String?, username: String?, key: String?, cmd: String?, sku: String?, buildSign: String?, requestListener: RequestProduct.RequestListener) {
+class InquiryPLNRequestController {
+    fun execute(
+            requestInquiryPLN: RequestInquiryPLN,
+            backendUrl: String?,
+            cmdInquiryPln: String?,
+            custNumber: String?,
+            requestListener: RequestInquiryPLN.RequestListener) {
         val cli = OkHttpClient().newBuilder().build()
         val rb: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart(PriceList.URL_HOST, EndPointDigiflazz.DAFTAR_HARGA)
-                .addFormDataPart(PriceList.USERNAME, username!!)
-                .addFormDataPart(PriceList.KEY, key!!)
-                .addFormDataPart(PriceList.COMMAND, cmd!!)
-                .addFormDataPart(PriceList.CODE_PRODUCT, sku!!)
-                .addFormDataPart(PriceList.SIGN, buildSign!!)
+                .addFormDataPart(InquiryPLN.URL_HOST, EndPointDigiflazz.TRANSAKSI)
+                .addFormDataPart(InquiryPLN.CUSTOMER_NUMBER, custNumber!!)
+                .addFormDataPart(InquiryPLN.COMMANDS, cmdInquiryPln!!)
                 .build()
         val req: Request = Request.Builder()
                 .url(backendUrl!!)
@@ -26,26 +28,24 @@ class ProductRequestController {
         cli.newCall(req).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 val message = e.message
-                requestProduct.activity.runOnUiThread { requestListener.onErrorResponse(message) }
+                requestInquiryPLN.activity.runOnUiThread { requestListener.onErrorResponse(message) }
                 call.cancel()
             }
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
                 val responseString = Objects.requireNonNull(response.body)!!.string()
-                requestProduct.activity.runOnUiThread { requestListener.onResponse(responseString) }
+                requestInquiryPLN.activity.runOnUiThread { requestListener.onResponse(responseString) }
             }
         })
     }
 
     companion object {
-        private var mInstance: ProductRequestController? = null
-
-        @get:Synchronized
-        val instance: ProductRequestController?
+        private var mInstance: InquiryPLNRequestController? = null
+        val instance: InquiryPLNRequestController?
             get() {
                 if (mInstance == null) {
-                    mInstance = ProductRequestController()
+                    mInstance = InquiryPLNRequestController()
                 }
                 return mInstance
             }

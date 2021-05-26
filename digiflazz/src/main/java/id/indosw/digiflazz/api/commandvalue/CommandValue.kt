@@ -1,15 +1,24 @@
-package id.indosw.digiflazz.api.commandvalue;
+package id.indosw.digiflazz.api.commandvalue
 
-@SuppressWarnings("SpellCheckingInspection")
-public class CommandValue {
-    public static String CMD_BALANCE_CHECK = "deposit";
-    public static String SIGN_BALANCE_CHECK = "depo";
-    public static String CMD_PRICELIST_PRA = "prepaid";
-    public static String CMD_PRICELIST_PASCA = "pasca";
-    public static String SIGN_PRICELIST = "pricelist";
-    public static String SIGN_DEPOSIT = "deposit";
-    public static String CMD_BILLING_CHECK = "inq-pasca";
-    public static String CMD_PAY_BILLING = "pay-pasca";
-    public static String CMD_STATUS_CHECK_PASCA = "status-pasca";
-    public static String CMD_INQUIRY_PLN = "pln-subscribe";
+object CommandValue {
+    @JvmField
+    var CMD_BALANCE_CHECK = "deposit"
+    @JvmField
+    var SIGN_BALANCE_CHECK = "depo"
+    @JvmField
+    var CMD_PRICELIST_PRA = "prepaid"
+    @JvmField
+    var CMD_PRICELIST_PASCA = "pasca"
+    @JvmField
+    var SIGN_PRICELIST = "pricelist"
+    @JvmField
+    var SIGN_DEPOSIT = "deposit"
+    @JvmField
+    var CMD_BILLING_CHECK = "inq-pasca"
+    @JvmField
+    var CMD_PAY_BILLING = "pay-pasca"
+    @JvmField
+    var CMD_STATUS_CHECK_PASCA = "status-pasca"
+    @JvmField
+    var CMD_INQUIRY_PLN = "pln-subscribe"
 }

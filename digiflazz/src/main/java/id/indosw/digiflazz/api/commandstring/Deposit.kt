@@ -1,11 +1,18 @@
-package id.indosw.digiflazz.api.commandstring;
+package id.indosw.digiflazz.api.commandstring
 
-public class Deposit {
-    public static String KEY = "key";
-    public static String URL_HOST = "url_host";
-    public static String USERNAME = "username";
-    public static String AMOUNT = "amount";
-    public static String BANK = "Bank";
-    public static String OWNER_NAME = "owner_name";
-    public static String SIGN = "sign";
+object Deposit {
+    @JvmField
+    var KEY = "key"
+    @JvmField
+    var URL_HOST = "url_host"
+    @JvmField
+    var USERNAME = "username"
+    @JvmField
+    var AMOUNT = "amount"
+    @JvmField
+    var BANK = "Bank"
+    @JvmField
+    var OWNER_NAME = "owner_name"
+    @JvmField
+    var SIGN = "sign"
 }

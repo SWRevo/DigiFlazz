@@ -1,10 +1,20 @@
-package id.indosw.digiflazz.api.commandstring;
+package id.indosw.digiflazz.api.commandstring
 
-public class BillingCheck {
-    public static String COMMANDS = "commands";
-    public static String USERNAME = "username";
-    public static String BUYER_SKU_CODE = "buyer_sku_code";
-    public static String CUSTOMER_NUMBER = "customer_no";
-    public static String REF_ID = "ref_id";
-    public static String SIGN = "sign";
+object BillingCheck {
+    @JvmField
+    var KEY = "key"
+    @JvmField
+    var URL_HOST = "url_host"
+    @JvmField
+    var COMMANDS = "commands"
+    @JvmField
+    var USERNAME = "username"
+    @JvmField
+    var BUYER_SKU_CODE = "buyer_sku_code"
+    @JvmField
+    var CUSTOMER_NUMBER = "customer_no"
+    @JvmField
+    var REF_ID = "ref_id"
+    @JvmField
+    var SIGN = "sign"
 }

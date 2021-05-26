@@ -1,10 +1,16 @@
-package id.indosw.digiflazz.api.commandstring;
+package id.indosw.digiflazz.api.commandstring
 
-public class PriceList {
-    public static String KEY = "key";
-    public static String URL_HOST = "url_host";
-    public static String COMMAND = "cmd";
-    public static String USERNAME = "username";
-    public static String SIGN = "sign";
-    public static String CODE_PRODUCT = "code";
+object PriceList {
+    @JvmField
+    var KEY = "key"
+    @JvmField
+    var URL_HOST = "url_host"
+    @JvmField
+    var COMMAND = "cmd"
+    @JvmField
+    var USERNAME = "username"
+    @JvmField
+    var SIGN = "sign"
+    @JvmField
+    var CODE_PRODUCT = "code"
 }

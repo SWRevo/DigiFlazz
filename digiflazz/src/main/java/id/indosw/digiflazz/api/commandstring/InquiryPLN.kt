@@ -1,6 +1,10 @@
-package id.indosw.digiflazz.api.commandstring;
+package id.indosw.digiflazz.api.commandstring
 
-public class InquiryPLN {
-    public static String COMMANDS = "commands";
-    public static String CUSTOMER_NUMBER = "customer_no";
+object InquiryPLN {
+    @JvmField
+    var URL_HOST = "url_host"
+    @JvmField
+    var COMMANDS = "commands"
+    @JvmField
+    var CUSTOMER_NUMBER = "customer_no"
 }

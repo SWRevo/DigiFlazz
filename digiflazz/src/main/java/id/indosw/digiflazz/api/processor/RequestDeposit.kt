@@ -1,60 +1,48 @@
-package id.indosw.digiflazz.api.processor;
+package id.indosw.digiflazz.api.processor
 
-import android.app.Activity;
+import android.app.Activity
+import id.indosw.digiflazz.api.commandvalue.CommandValue.SIGN_DEPOSIT
+import id.indosw.digiflazz.api.controller.DepositRequestController
+import id.indosw.digiflazz.api.sign.SignMaker.getSign
 
-import id.indosw.digiflazz.api.controller.DepositRequestController;
-import id.indosw.digiflazz.api.sign.SignMaker;
-
-import static id.indosw.digiflazz.api.commandvalue.CommandValue.SIGN_DEPOSIT;
-
-public class RequestDeposit {
-    private final Activity activity;
-    private String username;
-    private String backendUrl;
-    private String key;
-    private String amount;
-    private String bank;
-    private String owner;
-
-    public RequestDeposit(Activity activity){
-        this.activity = activity;
+class RequestDeposit(val activity: Activity) {
+    private var username: String? = null
+    private var backendUrl: String? = null
+    private var key: String? = null
+    private var amount: String? = null
+    private var bank: String? = null
+    private var owner: String? = null
+    fun setBackendUrl(backendUrl: String?) {
+        this.backendUrl = backendUrl
     }
 
-    public void setBackendUrl(String backendUrl){
-        this.backendUrl = backendUrl;
+    fun setUserName(username: String?) {
+        this.username = username
     }
 
-    public void setUserName(String username){
-        this.username = username;
+    fun setKey(key: String?) {
+        this.key = key
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    fun setAmount(amount: String?) {
+        this.amount = amount
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    fun setBank(bank: String?) {
+        this.bank = bank
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    fun setOwnerName(owner: String?) {
+        this.owner = owner
     }
 
-    public void setOwnerName(String owner) {
-        this.owner = owner;
+    fun startRequestDeposit(requestListener: RequestListener?) {
+        val signature = getSign(username!!, key!!, SIGN_DEPOSIT)
+        DepositRequestController.instance!!.execute(this, backendUrl, username, key, amount, bank, owner, signature, requestListener!!)
     }
 
-    public void startRequestDeposit(RequestDeposit.RequestListener requestListener){
-        String signature = SignMaker.getSign(username, key, SIGN_DEPOSIT);
-        DepositRequestController.getInstance().execute(this, backendUrl, username, key, amount, bank, owner, signature, requestListener);
-    }
-
-    public interface RequestListener {
-        void onResponse(String response);
-        void onErrorResponse(String message);
-    }
-
-    public Activity getActivity() {
-        return activity;
+    interface RequestListener {
+        fun onResponse(response: String?)
+        fun onErrorResponse(message: String?)
     }
 }
