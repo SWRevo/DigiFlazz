@@ -3,13 +3,13 @@ package id.indosw.networking;
 import android.app.Activity;
 import java.util.HashMap;
 
-public class JavaNetRequest {
+public class NetworkRequest {
     private HashMap<String, Object> params = new HashMap<>();
     private HashMap<String, Object> headers = new HashMap<>();
     private final Activity activity;
     private int requestType = 0;
 
-    public JavaNetRequest(Activity activity) {
+    public NetworkRequest(Activity activity) {
         this.activity = activity;
     }
 
@@ -39,7 +39,7 @@ public class JavaNetRequest {
     }
 
     public void startRequestNetwork(String method, String url, String tag, RequestListener requestListener) {
-        JavaNetRequestController.getInstance().execute(this, method, url, tag, requestListener);
+        NetworkRequestController.getInstance().execute(this, method, url, tag, requestListener);
     }
 
     public interface RequestListener {

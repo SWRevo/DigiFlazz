@@ -21,7 +21,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class JavaNetRequestController {
+public class NetworkRequestController {
     public static final String GET      = "GET";
     public static final String POST     = "POST";
     public static final String PUT      = "PUT";
@@ -31,11 +31,11 @@ public class JavaNetRequestController {
     private static final int SOCKET_TIMEOUT = 15000;
     private static final int READ_TIMEOUT   = 25000;
     protected OkHttpClient client;
-    private static JavaNetRequestController mInstance;
+    private static NetworkRequestController mInstance;
 
-    public static synchronized JavaNetRequestController getInstance() {
+    public static synchronized NetworkRequestController getInstance() {
         if(mInstance == null) {
-            mInstance = new JavaNetRequestController();
+            mInstance = new NetworkRequestController();
         }
         return mInstance;
     }
@@ -81,12 +81,12 @@ public class JavaNetRequestController {
         return client;
     }
 
-    public void execute(final JavaNetRequest javaNetRequest, String method, String url, final String tag, final JavaNetRequest.RequestListener requestListener) {
+    public void execute(final NetworkRequest networkRequest, String method, String url, final String tag, final NetworkRequest.RequestListener requestListener) {
         Request.Builder reqBuilder = new Request.Builder();
         Headers.Builder headerBuilder = new Headers.Builder();
 
-        if(javaNetRequest.getHeaders().size() > 0) {
-            HashMap<String, Object> headers = javaNetRequest.getHeaders();
+        if(networkRequest.getHeaders().size() > 0) {
+            HashMap<String, Object> headers = networkRequest.getHeaders();
 
             for(HashMap.Entry<String, Object> header : headers.entrySet()) {
                 headerBuilder.add(header.getKey(), String.valueOf(header.getValue()));
@@ -94,7 +94,7 @@ public class JavaNetRequestController {
         }
 
         try {
-            if (javaNetRequest.getRequestType() == REQUEST_PARAM) {
+            if (networkRequest.getRequestType() == REQUEST_PARAM) {
                 if (method.equals(GET)) {
                     HttpUrl.Builder httpBuilder;
 
@@ -104,8 +104,8 @@ public class JavaNetRequestController {
                         throw new NullPointerException("unexpected url: " + url);
                     }
 
-                    if (javaNetRequest.getParams().size() > 0) {
-                        HashMap<String, Object> params = javaNetRequest.getParams();
+                    if (networkRequest.getParams().size() > 0) {
+                        HashMap<String, Object> params = networkRequest.getParams();
 
                         for (HashMap.Entry<String, Object> param : params.entrySet()) {
                             httpBuilder.addQueryParameter(param.getKey(), String.valueOf(param.getValue()));
@@ -115,8 +115,8 @@ public class JavaNetRequestController {
                     reqBuilder.url(httpBuilder.build()).headers(headerBuilder.build()).get();
                 } else {
                     FormBody.Builder formBuilder = new FormBody.Builder();
-                    if (javaNetRequest.getParams().size() > 0) {
-                        HashMap<String, Object> params = javaNetRequest.getParams();
+                    if (networkRequest.getParams().size() > 0) {
+                        HashMap<String, Object> params = networkRequest.getParams();
 
                         for (HashMap.Entry<String, Object> param : params.entrySet()) {
                             formBuilder.add(param.getKey(), String.valueOf(param.getValue()));
@@ -128,7 +128,7 @@ public class JavaNetRequestController {
                     reqBuilder.url(url).headers(headerBuilder.build()).method(method, reqBody);
                 }
             } else {
-                RequestBody reqBody = RequestBody.create(new Gson().toJson(javaNetRequest.getParams()), okhttp3.MediaType.parse("application/json"));
+                RequestBody reqBody = RequestBody.create(new Gson().toJson(networkRequest.getParams()), okhttp3.MediaType.parse("application/json"));
 
                 if (method.equals(GET)) {
                     reqBuilder.url(url).headers(headerBuilder.build()).get();
@@ -142,13 +142,13 @@ public class JavaNetRequestController {
             getClient().newCall(req).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull final IOException e) {
-                    javaNetRequest.getActivity().runOnUiThread(() -> requestListener.onErrorResponse(tag, e.getMessage()));
+                    networkRequest.getActivity().runOnUiThread(() -> requestListener.onErrorResponse(tag, e.getMessage()));
                 }
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
                     final String responseBody = response.body().string().trim();
-                    javaNetRequest.getActivity().runOnUiThread(() -> {
+                    networkRequest.getActivity().runOnUiThread(() -> {
                         Headers b = response.headers();
                         HashMap<String, Object> map = new HashMap<>();
                         for(String s : b.names()) {
