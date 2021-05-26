@@ -1,7 +1,7 @@
 package id.indosw.digipanel;
 
 public class ConfigApi {
-	public static String SERVER_H2H = "https://api.digiflazz.com/v1/";
+	public static String SERVER_H2H = "";
     public static String USERNAME = "YOUR_USERNAME";
     public static String KEY = "YOUR_KEY";
     public static String BACKEND_URL = "YOUR_BACKEND_DOMAIN_URL";
