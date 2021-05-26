@@ -1,0 +1,5 @@
+include ':digiflazz'
+include ':networking'
+include ':jsonView'
+include ':app'
+rootProject.name = "DigiPanel"
