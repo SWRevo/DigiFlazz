@@ -1,8 +1,6 @@
-# DigiFlazz
+# Un-Official Library Of DigiFlazz Implementation
 
-# Un-Official Library Of DigiFlazz Implementation & Sample Android Implementation
-
-This Project is under progress and still continue for development.
+This Project & Sample Android Implementation is under progress and still continue for development.
 
 ![Sample screenshot](https://digiflazz.com/images/logo/main.png)
 
