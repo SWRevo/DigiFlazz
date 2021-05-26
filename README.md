@@ -8,7 +8,7 @@ This Project is under progress and still continue for development.
 
 ## License
 
-    Copyright 2021 indosw & DigiFlazz https://digiflazz.com/tentang-kami
+    Copyright 2021 IndoSW & [DigiFlazz](https://digiflazz.com/tentang-kami)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
